@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="styles.css">
+    <title>Yo'qlama Sayti</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Yo'qlama Sayti</h1>
+        <div class="controls-container">
+            <div class="card control-card flex flex-col gap-4">
+                <input type="text" id="studentName" placeholder="O'quvchi ismi" class="p-3 border rounded-lg">
+                <button onclick="addStudent()" class="bg-green-500 text-white p-3 rounded-lg">O'quvchi qo'shish</button>
+            </div>
+            <div class="card control-card flex flex-col gap-4">
+                <div class="flex items-center gap-2">
+                    <button id="confirmPriceBtn" onclick="confirmCoursePrice()" class="bg-green-500 text-white p-2 rounded-lg">✓</button>
+                    <button id="cancelPriceBtn" onclick="cancelCoursePrice()" class="bg-red-500 text-white p-2 rounded-lg hidden">✗</button>
+                    <input type="number" id="coursePrice" placeholder="Kurs narxi (so'm)" oninput="calculateDailyRate()" class="p-3 border rounded-lg w-40">
+                </div>
+                <div class="flex items-center gap-2">
+                    <button id="confirmDaysBtn" onclick="confirmCourseDays()" class="bg-green-500 text-white p-2 rounded-lg">✓</button>
+                    <button id="cancelDaysBtn" onclick="cancelCourseDays()" class="bg-red-500 text-white p-2 rounded-lg hidden">✗</button>
+                    <input type="number" id="courseDays" placeholder="Oyning dars kunlari" oninput="restrictCourseDays()" class="p-3 border rounded-lg w-40">
+                </div>
+                <input type="number" id="dailyRate" placeholder="Kunlik narx (so'm)" readonly class="p-3 border rounded-lg w-40 bg-gray-100">
+            </div>
+            <div class="card control-card flex flex-col gap-4">
+                <input type="date" id="currentDate" onchange="renderTable()" class="p-3 border rounded-lg w-full">
+            </div>
+            <div class="card control-card flex flex-col gap-4">
+                <button class="bg-blue-500 text-white p-3 rounded-lg w-full" onclick="calculatePayments()">To'lovlarni hisoblash</button>
+            </div>
+        </div>
+        <div class="table-container">
+            <table id="studentTable">
+                <thead>
+                    <tr>
+                        <th class="border_th_left">Ism</th>
+                        <th>Ro'yxatdan o'tish sanasi</th>
+                        <th>Kelgan kunlar</th>
+                        <th>Kelmagan kunlar</th>
+                        <th>To'lov</th>
+                        <th>Bugungi holat</th>
+                        <th>Tarix</th>
+                        <th class="border_th_right">Amallar</th>
+                    </tr>
+                </thead>
+                <tbody id="studentList"></tbody>
+            </table>
+        </div>
+    </div>
+    <div id="historyModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle" class="text-lg font-bold mb-4"></h2>
+            <div id="modalHistory"></div>
+            <button class="close-btn mt-4" onclick="closeModal()">Yopish</button>
+        </div>
+    </div>
+    <div id="editNameModal" class="modal">
+        <div class="modal-content">
+            <h2 class="text-lg font-bold mb-4">O'quvchi ismini o'zgartirish</h2>
+            <input type="text" id="editNameInput" placeholder="Yangi ism" class="p-3 border rounded-lg w-full mb-4">
+            <div class="flex gap-2">
+                <button class="bg-green-500 text-white p-2 rounded-lg" onclick="saveNewName()">Saqlash</button>
+                <button class="close-btn p-2" onclick="closeEditModal()">Yopish</button>
+            </div>
+        </div>
+    </div>
+    <div id="deleteConfirmModal" class="modal">
+        <div class="modal-content">
+            <h2 class="text-lg font-bold mb-4">O'quvchini o'chirish</h2>
+            <p id="deleteConfirmMessage" class="mb-4"></p>
+            <div class="flex gap-2">
+                <button class="bg-red-500 text-white p-2 rounded-lg" onclick="confirmDelete()">O'chirish</button>
+                <button class="close-btn p-2" onclick="closeDeleteModal()">Bekor qilish</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
